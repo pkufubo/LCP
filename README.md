@@ -1,4 +1,5 @@
 # LCP
+
 Land cover planning model
 土地覆盖规划模型
 
@@ -8,5 +9,6 @@ Land cover planning model
 - 背景：北京大学研究生课程《综合评估模型：算法与实践》期末作业
 
 ## 作者信息
+
 徐静  北京大学城市与环境学院19级博士研究生 19XXXXXXXX  
 付博  北京大学城市与环境学院18级博士研究生 1800013223
