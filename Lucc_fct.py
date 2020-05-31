@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import numpy as np
+import gdal
 from skimage import io
+
 '''
 土地利用模块
 
@@ -33,43 +35,22 @@ def get_Lucc_present(filename='Lucc.tif',filepath='./data/'):
     img[(img > 13) & (img < 17)] = 5  #未利用设为5
     return img
 
-
+def get_lon_lat(filename='Lucc.tif',filepath='./data/'):
+    '''
+    返回经纬度数据
+    ---
+    Input:
+    None
+    ---
+    Output:
+    lon,lat (np.array) 经度和维度
+    ''' 
+    dataset = gdal.Open(filepath+filename)
+    gtf = dataset.GetGeoTransform()
+    x_range = range(0, dataset.RasterXSize)
+    y_range = range(0, dataset.RasterYSize)
+    x, y = np.meshgrid(x_range, y_range)
+    lon = gtf[0] + x * gtf[1] + y * gtf[2]
+    lat = gtf[3] + x * gtf[4] + y * gtf[5]
+    return lon, lat
 # %%
-'''
-import gdal
-import numpy as np
-import os
-from skimage import io
-class Dataset:
-    def __init__(self, in_file):
-        self.in_file = in_file
-
-        dataset = gdal.Open(self.in_file)
-        self.XSize = dataset.RasterXSize  # 网格的X轴像素数量
-        self.YSize = dataset.RasterYSize  # 网格的Y轴像素数量
-        self.GeoTransform = dataset.GetGeoTransform()  # 投影转换信息
-        self.ProjectionInfo = dataset.GetProjection()  # 投影信息
-
-    def get_lon_lat(self):
-        gtf = self.GeoTransform
-        x_range = range(0, self.XSize)
-        y_range = range(0, self.YSize)
-        x, y = np.meshgrid(x_range, y_range)
-        lon = gtf[0] + x * gtf[1] + y * gtf[2]
-        lat = gtf[3] + x * gtf[4] + y * gtf[5]
-        return lon, lat
-dir_path = r"D:/综合评估模型  算法与实践/LCP/data"
-filename = "Lucc.tif"
-file_path = os.path.join(dir_path, filename)
-dataset = Dataset(file_path)
-
-value = io.imread(file_path).astype(np.float64)
-longitude, latitude = dataset.get_lon_lat()
-image_size = longitude.shape
-mask = np.zeros((3, image_size[0], image_size[1])).astype(np.float64) 
-mask[0]=longitude
-mask[1]=latitude
-mask[2]=value
-file_path = os.path.join(dir_path, "new_Lucc2.tif")
-io.imsave(file_path, np.float64(mask))
-'''
