@@ -31,7 +31,7 @@ def get_area_output(year,filename='output_per_area.csv',filepath='./data/'):
         model = linear_model.LinearRegression()
         model.fit(TMP[0].reshape(-1,1), TMP[1+i].reshape(-1,1))
         output.append(model.predict([[year]]).reshape(1)[0])
-    return output[:4]
+    return np.array(output[:4])
 
 def get_area_propotion():
     '''
@@ -50,7 +50,7 @@ def get_area_propotion():
     OIL_CROPS = 12925.43
     COTTON_CROPS = 3339.29
     SUGAR_CROPS = 1620
-    return [x/TOTAL for x in [FOOD_CROPS,OIL_CROPS,COTTON_CROPS,SUGAR_CROPS]]
+    return np.array([x/TOTAL for x in [FOOD_CROPS,OIL_CROPS,COTTON_CROPS,SUGAR_CROPS]])
     
 def get_capital_demand():
     '''
@@ -62,6 +62,26 @@ def get_capital_demand():
     Output:
     [r0,r1,r2,r3] (list) [增长率0-3]
     '''
-    return [0,0,0,0]
+    return np.array([0,0,0,0])
 
-pop_fct.get_pop()
+def crop_year(year):
+    '''
+    根据农产品需求得到的农田相对于2020年的系数
+    ---
+    Input:
+    year (int)
+    ---
+    Output:
+    r (float) 最少应为2020年的r倍  
+    '''
+    present_year = 2020
+    year = 2035
+    alpha_pop = pop_fct.get_pop_total_year(year)/pop_fct.get_pop_total_year(present_year)
+    alpha_capital_demand = get_capital_demand()+1
+    alpha_area_output = get_area_output(present_year)/get_area_output(year)
+    
+    alpha = alpha_pop*alpha_capital_demand*alpha_area_output
+    alpha_total = (alpha*get_area_propotion()).sum()/get_area_propotion().sum()
+    ### 耕地红线约束
+    pass
+    return alpha_total
