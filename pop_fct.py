@@ -23,5 +23,3 @@ def get_pop(filename='SSPs_POP_ssp2.csv',filepath='./data/'):
     pop = TMP[:,2:]
     
     return [lon,lat,pop]
-
-# %%
