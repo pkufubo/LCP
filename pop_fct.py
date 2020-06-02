@@ -52,4 +52,4 @@ def get_pop_total_timeseries(start=2010,end=2100):
     assert start in range(2010,2100+1),'只能以2010-2100的年份为输入变量'
     assert end in range(2010,2100+1),'只能以2010-2100的年份为输入变量'
     pop_data = get_pop()
-    return pop_data[2][start-2010:end-2010+1].sum(0)
+    return pop_data[2][:,start-2010:end-2010+1].sum(0)
