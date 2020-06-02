@@ -2,9 +2,13 @@ import matplotlib.pylab as plt
 from matplotlib.colors import ListedColormap
 import matplotlib.ticker as ticker
 import numpy as np
+
+import Lucc_fct
 '''
-画图模块
+画图脚本
 '''
+# %%
+# 一些画图辅助函数
 
 def get_luc_cmap():
     '''
@@ -26,6 +30,13 @@ def get_luc_cmap():
                   'olive'] 
     return ListedColormap(color_list)
 
+#%%
+# 绘制初始土地利用图
+Lucc_present = Lucc_fct.get_Lucc_present()
+plt.imshow(Lucc_present,cmap=get_luc_cmap())
+plt.colorbar()
+plt.title(r'当今土地利用变化')
+# %%
 def plot_POP(lon,lat,pop,title='POP'):
     '''
     绘制人口的空间分布

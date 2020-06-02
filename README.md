@@ -19,6 +19,39 @@ pass
 
 ## 模块介绍
 
+### 土地利用类型模块
+
+- **模块功能**
+
+  - 读写土地利用类型数据(tiff文件)
+  - 对原始土地利用类型重新分类
+
+- **模块说明**
+  - 重新编码
+
+    为了简化模型，将原始数据中的17种类型重新编码为本模型中的5种土地利用类型。
+
+    |编码|类型|原编码|原类型|
+    |----|----|----|------|
+    |**0**|**水体**|0|Water|
+    |**1**|**森林**|1|Evergreen Needle-leaf forest|
+    |**1**|**森林**|2|Evergreen Broad-leaf forest|
+    |**1**|**森林**|3|Deciduous Needle-leaf forest|
+    |**1**|**森林**|4|Deciduous Broad-leaf forest|
+    |**1**|**森林**|5|Mixed forest|
+    |**2**|**草地**|6|Closed shrublands|
+    |**2**|**草地**|7|Open shrublands|    
+    |**2**|**草地**|8|Woody savannas|
+    |**2**|**草地**|9|Savannas|
+    |**2**|**草地**|10|Grasslands|
+    |**2**|**草地**|11|Permanent wetlands|
+    |**3**|**农田**|12|Croplands|
+    |**4**|**建城区**|13|Urban and built-up|
+    |**5**|**未利用**|14|Cropland/Natural vegetation mosaic|
+    |**5**|**未利用**|15|Permanent snow and ice|
+    |**5**|**未利用**|16|Barren or sparsely vegetated|
+    |**-1**|**未利用**|255|Fill Value|
+
 ### 粮食农田模块
 
 - **模块功能**
