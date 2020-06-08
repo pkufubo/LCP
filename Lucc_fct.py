@@ -6,14 +6,14 @@ from skimage import io
 '''
 土地利用模块
 
-土地利用类型编码：
--1 --- 缺失值
-0---水体
-1---森林
-2---草地
-3---农田
-4---建城区
-5---未利用
+# 土地利用类型编码：
+# -1 --- 缺失值
+# 0---水体
+# 1---森林
+# 2---草地
+# 3---农田
+# 4---建城区
+# 5---未利用
 '''
 
 def get_Lucc_present(filename='Lucc.tif',filepath='./data/'):
@@ -55,3 +55,4 @@ def get_lon_lat(filename='Lucc.tif',filepath='./data/'):
     lat = gtf[3] + x * gtf[4] + y * gtf[5]
     return lon, lat
 # %%
+
