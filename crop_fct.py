@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 import numpy as np
-import pop_fct
 import csv
 from sklearn import linear_model 
+
+import pop_fct
+import Lucc_fct
 '''
 粮食农田模块
 
@@ -75,7 +77,6 @@ def crop_year(year):
     r (float) 最少应为2020年的r倍  
     '''
     present_year = 2020
-    year = 2035
     alpha_pop = pop_fct.get_pop_total_year(year)/pop_fct.get_pop_total_year(present_year)
     alpha_capital_demand = get_capital_demand()+1
     alpha_area_output = get_area_output(present_year)/get_area_output(year)
@@ -83,5 +84,7 @@ def crop_year(year):
     alpha = alpha_pop*alpha_capital_demand*alpha_area_output
     alpha_total = (alpha*get_area_propotion()).sum()/get_area_propotion().sum()
     ### 耕地红线约束
-    pass
-    return alpha_total
+    RED_LINE = 18e8*0.0006667  # 18亿亩耕地红线
+    Lucc_present = Lucc_fct.get_Lucc_present(filename='Lucc.tif',filepath='./data/')
+    crop_area = (Lucc_present==3).sum()
+    return np.max([alpha_total,RED_LINE/crop_area])
