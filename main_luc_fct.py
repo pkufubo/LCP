@@ -95,11 +95,19 @@ Lucc_next[w_random_list>=sort_random[-n_need]] =1 ##被选出的区域变成了�
 
 ###  第三步 农田
 
-# (Lucc_next==3)
+size = Lucc_present.shape
+random_list = np.random.rand(size[0],size[1])
+weight = count_luc_class(Lucc_present,3)
+w_random_list = random_list*weight
+w_random_list = (1-(Lucc_present==-1))*(1-(Lucc_present==3))\
+    * (1-(Lucc_present==0))* (1-(Lucc_present==4))* w_random_list
 
-# test = count_luc_class(Lucc_present,1)
-# plt.imshow(test)
-# plt.colorbar()
-# plt.title('Weight from neighbors for forest')
+sort_random = np.sort(w_random_list.reshape(size[0]*size[1]))
+if crop_alpha>1:
+    n_need = int((crop_alpha-1)*(Lucc_present==2).sum())
+    Lucc_next[w_random_list>=sort_random[-n_need]] = 2 
+else:
+    pass
+io.imsave('Lucc_next.tif', np.int(Lucc_next))
 
 
