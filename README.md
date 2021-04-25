@@ -2,6 +2,7 @@
 
 Land cover planning model
 土地覆盖规划模型
+(test)
 
 ## 项目说明
 
